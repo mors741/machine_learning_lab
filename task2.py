@@ -1,30 +1,10 @@
 from scipy import stats
 
-from common import read_data
-from random import shuffle
+from common import read_data, get_samples
 
 SAMPLE_SIZE = 40
 EPSILON = 0.000001
 U_CRITICAL = 557  # 1%
-
-
-def get_samples(label_list, score_list):
-    tuples = zip(score_list, label_list)
-    shuffle(tuples)
-    positive_count = 0
-    negative_count = 0
-    res = []
-    for tpl in tuples:
-        if tpl[1] > 0 and positive_count < SAMPLE_SIZE:
-            res.append(tpl)
-            positive_count += 1
-        elif tpl[1] < 0 and negative_count < SAMPLE_SIZE:
-            res.append(tpl)
-            negative_count += 1
-
-        if positive_count == SAMPLE_SIZE and negative_count == SAMPLE_SIZE:
-            break
-    return res
 
 
 def ranked(samples):
@@ -75,7 +55,7 @@ def to_lists(samples):
 
 def task2():
     data, x1, x2, label_list, score_list = read_data()
-    samples = get_samples(label_list, score_list)
+    samples = get_samples(label_list, score_list, SAMPLE_SIZE, SAMPLE_SIZE)
     ranked_samples = ranked(samples)
     positive_sum, negative_sum = sum_ranks(ranked_samples)
     u_emp = u_emp_value(positive_sum, negative_sum)

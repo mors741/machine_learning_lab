@@ -47,7 +47,7 @@ def task1():
     roc_y = []
     pr_x = []
     pr_y = []
-    best_youdens = (0,0,0)
+    best_youdens = (0,0,0,0,0)
 
     for threshold in threshold_list:
         TP = 0
@@ -78,7 +78,7 @@ def task1():
 
         j_index = TPR - FPR  # Youden's index (Youden's J statistic) sensitivity + specificity - 1
         if (j_index > best_youdens[0]):
-            best_youdens = (j_index, TPR, FPR, precision)
+            best_youdens = (j_index, threshold, TPR, FPR, precision)
             print best_youdens
 
     roc_x, roc_y = sort_coordinates(roc_x, roc_y);
@@ -89,7 +89,8 @@ def task1():
     plt.figure(1)
     plt.plot(roc_x, roc_y, label="ROC curve")
     plt.plot([0, 1], [0, 1], linestyle='--', label="Random")
-    plt.scatter(best_youdens[2], best_youdens[1], marker='o', color='r', label="Youden's max")
+    plt.scatter(best_youdens[3], best_youdens[2], marker='o', color='r', label="Youden's max")
+    plt.text(best_youdens[3] + 0.02, best_youdens[2] - 0.06, 'thr=' + "{:.5f}".format(best_youdens[1]))
     plt.text(.5, .2, 'AUC=' + "{:.5f}".format(roc_auc))
     plt.xlabel("False Positive Rate")
     plt.ylabel("True Positive Rate")
@@ -98,7 +99,8 @@ def task1():
 
     plt.figure(2)
     plt.plot(pr_x, pr_y, label="PR curve")
-    plt.scatter(best_youdens[1], best_youdens[3], marker='o', color='r', label="Youden's max")
+    plt.scatter(best_youdens[2], best_youdens[4], marker='o', color='r', label="Youden's max")
+    plt.text(best_youdens[2] - 0.02, best_youdens[4] + 0.04, 'thr=' + "{:.5f}".format(best_youdens[1]))
     plt.text(.5, .2, 'AUC=' + "{:.5f}".format(pr_auc))
     plt.xlabel("Recall")
     plt.ylabel("Precision")
