@@ -1,6 +1,6 @@
 from scipy import stats
 
-from common import read_data, get_samples
+from common import read_data, get_zipped_samples
 
 SAMPLE_SIZE = 40
 EPSILON = 0.000001
@@ -55,7 +55,7 @@ def to_lists(samples):
 
 def task2():
     data, x1, x2, label_list, score_list = read_data()
-    samples = get_samples(label_list, score_list, SAMPLE_SIZE, SAMPLE_SIZE)
+    samples = get_zipped_samples(label_list, score_list, SAMPLE_SIZE, SAMPLE_SIZE)
     ranked_samples = ranked(samples)
     positive_sum, negative_sum = sum_ranks(ranked_samples)
     u_emp = u_emp_value(positive_sum, negative_sum)
