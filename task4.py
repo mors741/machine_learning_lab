@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from common import read_data, get_samples, calculate_rot_pr_curves
+from task1_3 import calculate_rot_pr_curves
+from task2 import get_samples
 
 
 def calculate_roc_pr_auc_dependency_from_size(label_list, score_list):
@@ -21,8 +22,7 @@ def calculate_roc_pr_auc_dependency_from_size(label_list, score_list):
     return sample_size_list, roc_auc_list, pr_auc_list
 
 
-def task4():
-    data, x1, x2, label_list, score_list = read_data()
+def run4(label_list, score_list):
     sample_size_list, roc_auc_list, pr_auc_list = calculate_roc_pr_auc_dependency_from_size(label_list, score_list)
 
     plt.figure(1)
@@ -38,6 +38,3 @@ def task4():
     plt.title("PR AUC dependency from Sample size")
 
     plt.show()
-
-
-task4()

@@ -1,10 +1,37 @@
-from scipy import stats
+from random import shuffle
 
-from common import read_data, get_zipped_samples
+from scipy import stats
 
 SAMPLE_SIZE = 40
 EPSILON = 0.000001
 U_CRITICAL = 557  # 1%
+
+
+def get_samples(label_list, score_list, positive_size, negative_size):
+    tuples = zip(score_list, label_list)
+    shuffle(tuples)
+    positive_count = 0
+    negative_count = 0
+    res_score_list = []
+    res_label_list = []
+    for tpl in tuples:
+        if tpl[1] > 0 and positive_count < positive_size:
+            res_score_list.append(tpl[0])
+            res_label_list.append(tpl[1])
+            positive_count += 1
+        elif tpl[1] < 0 and negative_count < negative_size:
+            res_score_list.append(tpl[0])
+            res_label_list.append(tpl[1])
+            negative_count += 1
+
+        if positive_count == positive_size and negative_count == negative_size:
+            break
+    return res_score_list, res_label_list
+
+
+def get_zipped_samples(label_list, score_list, positive_size, negative_size):
+    score_list, label_list = get_samples(label_list, score_list, positive_size, negative_size)
+    return zip(score_list, label_list)
 
 
 def ranked(samples):
@@ -53,8 +80,7 @@ def to_lists(samples):
     return x, y
 
 
-def task2():
-    data, x1, x2, label_list, score_list = read_data()
+def run2(label_list, score_list):
     samples = get_zipped_samples(label_list, score_list, SAMPLE_SIZE, SAMPLE_SIZE)
     ranked_samples = ranked(samples)
     positive_sum, negative_sum = sum_ranks(ranked_samples)
@@ -76,6 +102,3 @@ def task2():
     print "--- scipy result ---"
     print "u_emp = ", statistic
     print "pvalue = ", pvalue
-
-
-task2()
