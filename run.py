@@ -3,6 +3,7 @@ import csv
 from task1_3 import run1_3
 from task2 import run2
 from task4 import run4
+from task5 import run5
 
 
 def read_data():
@@ -27,5 +28,6 @@ def read_data():
 data, x1, x2, label_list, score_list = read_data()
 
 run1_3(label_list, score_list)
-# run2(label_list, score_list)
-# run4(label_list, score_list)
+run2(label_list, score_list)
+run4(label_list, score_list)
+run5(label_list, score_list)

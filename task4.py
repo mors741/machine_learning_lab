@@ -26,13 +26,13 @@ def run4(label_list, score_list):
     sample_size_list, roc_auc_list, pr_auc_list = calculate_roc_pr_auc_dependency_from_size(label_list, score_list)
 
     plt.figure(1)
-    plt.plot(sample_size_list, roc_auc_list, label="ROC curve")
+    plt.plot(sample_size_list, roc_auc_list)
     plt.xlabel("Sample size")
     plt.ylabel("ROC AUC")
     plt.title("ROC AUC dependency from Sample size")
 
     plt.figure(2)
-    plt.plot(sample_size_list, pr_auc_list, label="PR curve")
+    plt.plot(sample_size_list, pr_auc_list)
     plt.xlabel("Sample size")
     plt.ylabel("PR AUC")
     plt.title("PR AUC dependency from Sample size")
