@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.ticker import AutoMinorLocator
 
 from task1_3 import calculate_rot_pr_curves
 from task2 import get_samples
@@ -26,15 +27,28 @@ def run4(label_list, score_list):
     sample_size_list, roc_auc_list, pr_auc_list = calculate_roc_pr_auc_dependency_from_size(label_list, score_list)
 
     plt.figure(1)
-    plt.plot(sample_size_list, roc_auc_list)
+    ax = plt.axes()
+    ax.yaxis.set_minor_locator(AutoMinorLocator(2))
+    ax.xaxis.set_minor_locator(AutoMinorLocator(2))
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    plt.plot(sample_size_list, roc_auc_list, marker='.')
     plt.xlabel("Sample size")
     plt.ylabel("ROC AUC")
+    plt.xlim([0, 375])
     plt.title("ROC AUC dependency from Sample size")
 
     plt.figure(2)
-    plt.plot(sample_size_list, pr_auc_list)
+    ax = plt.axes()
+    ax.yaxis.set_minor_locator(AutoMinorLocator(2))
+    ax.xaxis.set_minor_locator(AutoMinorLocator(2))
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    plt.plot(sample_size_list, pr_auc_list, marker='.')
     plt.xlabel("Sample size")
     plt.ylabel("PR AUC")
+    plt.xlim([0, 375])
+    plt.ylim([0, 1.05])
     plt.title("PR AUC dependency from Sample size")
 
     plt.show()

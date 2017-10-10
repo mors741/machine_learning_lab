@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.ticker import AutoMinorLocator
 
 
 def get_threshold_list(score_list):
@@ -87,17 +88,29 @@ def run1_3(label_list, score_list):
     pr_auc = np.trapz(pr_y, pr_x)
 
     plt.figure(1)
+    ax = plt.axes()
+    ax.yaxis.set_minor_locator(AutoMinorLocator(2))
+    ax.xaxis.set_minor_locator(AutoMinorLocator(2))
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
     plt.plot(roc_x, roc_y, label="ROC curve")
     plt.plot([0, 1], [0, 1], linestyle='--', label="Random")
     plt.scatter(best_youdens[3], best_youdens[2], marker='o', color='r', label="Youden's max")
     plt.text(best_youdens[3] + 0.02, best_youdens[2] - 0.06, 'thr=' + "{:.5f}".format(best_youdens[1]))
-    plt.text(.5, .2, 'AUC=' + "{:.5f}".format(roc_auc))
+    plt.text(.5, .25, 'AUC=' + "{:.5f}".format(roc_auc))
     plt.xlabel("False Positive Rate")
     plt.ylabel("True Positive Rate")
     plt.title("ROC curve")
+    plt.xlim([-0.05, 1.05])
+    plt.ylim([0, 1.05])
     plt.legend()
 
     plt.figure(2)
+    ax = plt.axes()
+    ax.yaxis.set_minor_locator(AutoMinorLocator(2))
+    ax.xaxis.set_minor_locator(AutoMinorLocator(2))
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
     plt.plot(pr_x, pr_y, label="PR curve")
     plt.scatter(best_youdens[2], best_youdens[4], marker='o', color='r', label="Youden's max")
     plt.text(best_youdens[2] - 0.02, best_youdens[4] + 0.04, 'thr=' + "{:.5f}".format(best_youdens[1]))
@@ -105,7 +118,8 @@ def run1_3(label_list, score_list):
     plt.xlabel("Recall")
     plt.ylabel("Precision")
     plt.title("PR curve")
-    plt.ylim([-0.05, 1.05])
+    plt.xlim([-0.05, 1.05])
+    plt.ylim([0, 1.05])
     plt.legend()
 
     plt.show()

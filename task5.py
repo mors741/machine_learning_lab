@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.ticker import AutoMinorLocator
 from scipy import stats
 
 
@@ -35,9 +36,15 @@ def run5(label_list, score_list):
     print "SIZE & ROC AUC =", stats.pearsonr(sample_size_list, roc_auc_list)
     print "SIZE & PR AUC =", stats.pearsonr(sample_size_list, pr_auc_list)
 
-    plt.scatter(roc_auc_list, pr_auc_list)
+    ax = plt.axes()
+    ax.yaxis.set_minor_locator(AutoMinorLocator(2))
+    ax.xaxis.set_minor_locator(AutoMinorLocator(2))
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    plt.scatter(roc_auc_list, pr_auc_list, marker='x')
     plt.xlabel("ROC AUC")
     plt.ylabel("PR AUC")
+    plt.ylim([0, 1.05])
     ax = plt.axes()
     plt.text(.65, .2, 'Correlation=' + "{:.5f}".format(correlation), transform=ax.transAxes)
     plt.title("ROC AUC and PR AUC Scatter plot")
