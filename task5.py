@@ -44,7 +44,6 @@ def run5(label_list, score_list):
     plt.scatter(roc_auc_list, pr_auc_list, marker='x')
     plt.xlabel("ROC AUC")
     plt.ylabel("PR AUC")
-    plt.ylim([0, 1.05])
     ax = plt.axes()
     plt.text(.65, .2, 'Correlation=' + "{:.5f}".format(correlation), transform=ax.transAxes)
     plt.title("ROC AUC and PR AUC Scatter plot")
