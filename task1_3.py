@@ -119,10 +119,10 @@ def run1_3(label_list, score_list):
     plt.plot(roc_x, roc_y, label="ROC curve")
     plt.plot([0, 1], [0, 1], linestyle='--', label="Random")
 
-    plt.scatter(best_thr[0][3], best_thr[0][2], marker=9, color='g', label="SENS-SPEC min")
+    plt.scatter(best_thr[0][3], best_thr[0][2], marker=9, color='g', label="|SENS-SPEC| min")
     plt.text(best_thr[0][3] + 0.04, best_thr[0][2] - 0.02, 'thr=' + "{:.5f}".format(best_thr[0][1]), color='g')
 
-    plt.scatter(best_thr[1][3], best_thr[1][2], marker='x', color='y', label="Closes to perfect")
+    plt.scatter(best_thr[1][3], best_thr[1][2], marker='x', color='y', label="Closest to perfect")
     plt.text(best_thr[1][3] + 0.02, best_thr[1][2] - 0.06, 'thr=' + "{:.5f}".format(best_thr[1][1]), color='y')
 
     plt.scatter(best_thr[2][3], best_thr[2][2], marker='o', color='r', label="Youden's max")
@@ -151,10 +151,10 @@ def run1_3(label_list, score_list):
     plt.plot(pr_x, pr_y, label="PR curve")
 
 
-    plt.scatter(best_thr[0][2], best_thr[0][4], marker=9, color='g', label="SENS-SPEC min")
+    plt.scatter(best_thr[0][2], best_thr[0][4], marker=9, color='g', label="|SENS-SPEC| min")
     plt.text(best_thr[0][2] + 0.04, best_thr[0][4], 'thr=' + "{:.5f}".format(best_thr[0][1]), color='g')
 
-    plt.scatter(best_thr[1][2], best_thr[1][4], marker='x', color='y', label="Closes to perfect")
+    plt.scatter(best_thr[1][2], best_thr[1][4], marker='x', color='y', label="Closest to perfect")
     plt.text(best_thr[1][2] + 0.02, best_thr[1][4] + 0.02, 'thr=' + "{:.5f}".format(best_thr[1][1]), color='y')
 
     plt.scatter(best_thr[2][2], best_thr[2][4], marker='o', color='r', label="Youden's max")
