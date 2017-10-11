@@ -24,7 +24,7 @@ def corcoef(a_list, b_list):
 
 
 def run5(label_list, score_list):
-    sample_size_list, roc_auc_list, pr_auc_list = calculate_roc_pr_auc_dependency_from_size(label_list, score_list)
+    sample_size_list, roc_auc_list, pr_auc_list = calculate_roc_pr_auc_dependency_from_size(label_list, score_list, 10)
 
     correlation = corcoef(roc_auc_list, pr_auc_list)
     print "ROC AUC & PR AUC =", correlation

@@ -6,12 +6,12 @@ from task1_3 import calculate_rot_pr_curves
 from task2 import get_samples
 
 
-def calculate_roc_pr_auc_dependency_from_size(label_list, score_list):
+def calculate_roc_pr_auc_dependency_from_size(label_list, score_list, start_size=1):
     sample_size_list = []
     roc_auc_list = []
     pr_auc_list = []
 
-    for i in xrange(1, 51):
+    for i in xrange(start_size, 51):
         sample_score_list, sample_label_list = get_samples(label_list, score_list, i, 6 * i)
         roc_x, roc_y, pr_x, pr_y, best_youdens = calculate_rot_pr_curves(sample_label_list, sample_score_list)
         sample_size_list.append(i * 7)
