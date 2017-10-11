@@ -88,9 +88,10 @@ def calculate_rot_pr_curves(label_list, score_list):
         if j_index > best_youdens[0]:
             best_youdens = (j_index, threshold, TPR, FPR, precision)
 
-        f_score = (2 * precision * recall)/(precision + recall)
-        if f_score > best_f_score[0]:
-            best_f_score = (f_score, threshold, TPR, FPR, precision)
+        if precision + recall != 0:
+            f_score = (2 * precision * recall)/(precision + recall)
+            if f_score > best_f_score[0]:
+                best_f_score = (f_score, threshold, TPR, FPR, precision)
 
         ACC0 = ((TN+FN) * (TN+FP) + (TP+FP) * (TP+FN))/float(P+N)**2
         kappa = (ACC - ACC0)/(1 - ACC0)
