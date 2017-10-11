@@ -88,7 +88,7 @@ def run2(label_list, score_list):
 
     print "samples =", samples
     print "ranked_samples =", ranked_samples
-    print "positive_sum =", positive_sum, negative_sum
+    print "positive_sum =", positive_sum, "negative_sum =", negative_sum
     print "u_emp =", u_emp
 
     if u_emp < U_CRITICAL:
