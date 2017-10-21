@@ -149,6 +149,8 @@ def run1_3(label_list, score_list):
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     plt.plot(pr_x, pr_y, label="PR curve")
+    min_pr_y = min(pr_y)
+    plt.plot([0, 1], [min_pr_y, min_pr_y], linestyle='--', label="Random")
 
 
     plt.scatter(best_thr[0][2], best_thr[0][4], marker=9, color='g', label="|SENS-SPEC| min")
