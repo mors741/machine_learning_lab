@@ -4,7 +4,7 @@ from matplotlib.ticker import AutoMinorLocator
 from scipy import stats
 
 
-from task4 import calculate_roc_pr_auc_dependency_from_size
+from task1_4 import calculate_roc_pr_auc_dependency_from_size
 
 
 def corcoef(a_list, b_list):

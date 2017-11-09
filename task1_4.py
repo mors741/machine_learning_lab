@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import AutoMinorLocator
 
-from task1_3 import calculate_rot_pr_curves
-from task2 import get_samples
+from task1_1 import calculate_rot_pr_curves
+from task1_2 import get_samples
 
 
 def calculate_roc_pr_auc_dependency_from_size(label_list, score_list, start_size=1):
