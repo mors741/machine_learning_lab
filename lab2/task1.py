@@ -85,19 +85,24 @@ def get_sample_dots(x1_list, x2_list):
     return np.meshgrid(x_range, x_range)
 
 
-def surface_plot(X, Y, Z, title, z_limit=(0, 0)):
+def surface_plot(X, Y, Z, title, z_limit=(0, 0), z_label="Density", power_limits=False):
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     surf = ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.coolwarm,
                            linewidth=0, antialiased=False)
 
-    fig.colorbar(surf, shrink=0.5, aspect=5)
+    cb = fig.colorbar(surf, shrink=0.5, aspect=5)
+
+    if power_limits:
+        cb.formatter.set_powerlimits((0, 0))
+        cb.update_ticks()
+        ax.ticklabel_format(style='sci', axis='z', scilimits=(0, 0))
 
     if z_limit != (0,0):
         ax.set_zlim3d(z_limit[0], z_limit[1])
     ax.set_xlabel("x1")
     ax.set_ylabel("x2")
-    ax.set_zlabel("Density")
+    ax.set_zlabel(z_label)
     plt.title(title)
 
 

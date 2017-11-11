@@ -3,7 +3,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import random
 
-from lab2.task1 import get_sample_dots, draw_plots, silverman_bandwidth, gaussian_kernel, calc_z_matrix, box_kernel
+from lab2.task1 import get_sample_dots, draw_plots, silverman_bandwidth, gaussian_kernel, calc_z_matrix, box_kernel, \
+    surface_plot
+
+ITER_COUNT = 10
 
 
 def generate_indexes(sample_size, required_amount):
@@ -14,10 +17,10 @@ def generate_indexes(sample_size, required_amount):
         res.append(random.sample(indexes, half_size))
     return res
 
-def calc_z_matrix_with_cache(X, Y, x, y, kernel_function, hx, hy):
+def calc_z_matrix_with_cache(X, Y, x, y, kernel_function, hx, hy, expected_sample_size):
     shape = np.shape(X)
     x_len = len(x)
-    coef = hx * hy # should be later divided by x_len
+    coef = expected_sample_size * hx * hy
     Z = np.zeros((shape[0], shape[1], x_len))
 
     for r in range(shape[0]):
@@ -45,18 +48,33 @@ def variance(cached_Z, index_matrix):
         Z = fold_z_matrix(cached_Z, index_matrix[i])
         folded_z_storage.append(Z)
         sum_z = np.add(sum_z, Z)
-    return sum_z / (l * len(index_matrix[0]))
+    mean_matrix = sum_z / l
+    variance_matrix = np.zeros((shape[0], shape[1]))
+    for z_iter in folded_z_storage:
+        for c in range(shape[0]):
+            for r in range(shape[1]):
+                variance_matrix[c][r] += (z_iter[c][r] - mean_matrix[c][r])**2
+    variance_matrix = variance_matrix / l
+    return variance_matrix
+
+
+def calc_Z_variance(X, Y, x, y, hx, hy):
+    cached_Z = calc_z_matrix_with_cache(X, Y, x, y, gaussian_kernel, hx, hy, len(x) / 2)
+    return variance(cached_Z, generate_indexes(len(x), ITER_COUNT))
+
 
 def run(x1_list, x2_list):
     X, Y = get_sample_dots(x1_list, x2_list)
 
+    Z = calc_Z_variance(X, Y, x1_list, x2_list, 0.15, 0.15)
+    surface_plot(X, Y, Z, "Variance (small bandwidth)", z_label="Variance", power_limits=True)
+
     silv_x = silverman_bandwidth(x1_list)
     silv_y = silverman_bandwidth(x2_list)
-    cached_Z_silv = calc_z_matrix_with_cache(X, Y, x1_list, x2_list, gaussian_kernel, silv_x, silv_y)
-    Z1 = calc_z_matrix(X, Y, x1_list, x2_list, gaussian_kernel, silv_x, silv_y)
-    # Z2 = fold_z_matrix(cached_Z_silv, range(len(x1_list)/2, len(x1_list)))
-    Z2 = variance(cached_Z_silv, generate_indexes(len(x1_list), 10))
-    draw_plots(X, Y, Z1, "Z1")
-    draw_plots(X, Y, Z2, "Z2")
+    Z = calc_Z_variance(X, Y, x1_list, x2_list, silv_x, silv_y)
+    surface_plot(X, Y, Z, "Variance (Silverman's bandwidth)", z_label="Variance", power_limits=True)
+
+    Z = calc_Z_variance(X, Y, x1_list, x2_list, 5, 5)
+    surface_plot(X, Y, Z, "Variance (big bandwidth)", z_label="Variance", power_limits=True)
 
     plt.show()
