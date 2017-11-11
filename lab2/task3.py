@@ -23,15 +23,18 @@ def real_destribution(X, Y):
 def run(x1_list, x2_list):
     X, Y = get_sample_dots(x1_list, x2_list)
     Z_real = real_destribution(X, Y)
+    z_limit_full = (0, 0.10)
 
-    draw_plots(X, Y, Z_real, "Real distribution density")
+    draw_plots(X, Y, Z_real, "Real distribution density", z_limit_full)
 
     silv_x = silverman_bandwidth(x1_list)
     silv_y = silverman_bandwidth(x2_list)
-    Z_silv = calc_z_matrix(X, Y, x1_list, x2_list, box_kernel, silv_x, silv_y)
-    draw_plots(X, Y, Z_silv, "Silverman's bandwidth")
+    Z_silv = calc_z_matrix(X, Y, x1_list, x2_list, gaussian_kernel, silv_x, silv_y)
+    draw_plots(X, Y, Z_silv, "Silverman's bandwidth", z_limit_full)
 
-    draw_plots(X, Y, np.absolute(Z_silv - Z_real), "Bias")
+    Z_bias = np.absolute(Z_silv - Z_real)
+    draw_plots(X, Y, Z_bias, "Bias")
+    draw_plots(X, Y, Z_bias, "Bias fixed Z", z_limit_full)
 
 
 
