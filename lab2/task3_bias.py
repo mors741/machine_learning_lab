@@ -24,18 +24,25 @@ def run(x1_list, x2_list):
     X, Y = get_sample_dots(x1_list, x2_list)
     Z_real = real_destribution(X, Y)
     z_limit_full = (0, 0.10)
+    z_limit_bias = (0, 0.08)
 
-    draw_plots(X, Y, Z_real, "Real distribution density", z_limit_full)
+    # draw_plots(X, Y, Z_real, "Real distribution density", z_limit_full)
 
     silv_x = silverman_bandwidth(x1_list)
     silv_y = silverman_bandwidth(x2_list)
     Z_silv = calc_z_matrix(X, Y, x1_list, x2_list, gaussian_kernel, silv_x, silv_y)
-    draw_plots(X, Y, Z_silv, "Silverman's bandwidth", z_limit_full)
+    # draw_plots(X, Y, Z_silv, "Silverman's bandwidth", z_limit_full)
 
     Z_bias = np.absolute(Z_silv - Z_real)
-    draw_plots(X, Y, Z_bias, "Bias")
-    draw_plots(X, Y, Z_bias, "Bias fixed Z", z_limit_full)
+    # draw_plots(X, Y, Z_bias, "Bias (Silverman's bandwidth) fixed Z", z_limit_full)
+    # draw_plots(X, Y, Z_bias, "Bias (Silverman's bandwidth)")
+    draw_plots(X, Y, Z_bias, "Bias (Silverman's bandwidth)", z_limit_bias)
 
+    Z_small = calc_z_matrix(X, Y, x1_list, x2_list, gaussian_kernel, 0.15, 0.15)
+    draw_plots(X, Y, np.absolute(Z_small - Z_real), "Bias (small bandwidth)", z_limit_bias)
+
+    Z_big = calc_z_matrix(X, Y, x1_list, x2_list, gaussian_kernel, 5, 5)
+    draw_plots(X, Y, np.absolute(Z_big - Z_real), "Bias (big bandwidth)", z_limit_bias)
 
 
     plt.show()
