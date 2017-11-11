@@ -1,6 +1,6 @@
 import csv
 
-from lab2 import task1, task2
+from lab2 import task1, task2, task3
 from lab2.visual import visualize
 
 
@@ -20,6 +20,7 @@ def read_data():
 
 
 data, x1, x2 = read_data()
-visualize(x1, x2)
-task1.run(x1, x2)
-task2.run(x1, x2)
+# visualize(x1, x2)
+# task1.run(x1, x2)
+# task2.run(x1, x2)
+task3.run(x1, x2)
