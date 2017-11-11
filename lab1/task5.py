@@ -4,7 +4,7 @@ from matplotlib.ticker import AutoMinorLocator
 from scipy import stats
 
 
-from task1_4 import calculate_roc_pr_auc_dependency_from_size
+from task4 import calculate_roc_pr_auc_dependency_from_size
 
 
 def corcoef(a_list, b_list):
@@ -23,7 +23,7 @@ def corcoef(a_list, b_list):
     return covar / np.sqrt(sq_disp_a * sq_disp_b)
 
 
-def run5(label_list, score_list):
+def run(label_list, score_list):
     sample_size_list, roc_auc_list, pr_auc_list = calculate_roc_pr_auc_dependency_from_size(label_list, score_list, 10)
 
     correlation = corcoef(roc_auc_list, pr_auc_list)

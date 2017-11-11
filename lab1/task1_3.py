@@ -104,7 +104,7 @@ def calculate_rot_pr_curves(label_list, score_list):
     return roc_x, roc_y, pr_x, pr_y, [min_sens_minus_spec, closest_to_perfect, best_youdens, best_f_score, best_kappa]
 
 
-def run1(label_list, score_list):
+def run(label_list, score_list):
     roc_x, roc_y, pr_x, pr_y, best_thr = calculate_rot_pr_curves(label_list, score_list)
 
     roc_auc = np.trapz(roc_y, roc_x)

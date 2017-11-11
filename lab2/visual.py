@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
 
 
-def visualize2(x1, x2):
+def visualize(x1, x2):
     ax = plt.axes()
     ax.yaxis.set_minor_locator(AutoMinorLocator(2))
     ax.xaxis.set_minor_locator(AutoMinorLocator(2))

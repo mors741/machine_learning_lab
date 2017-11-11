@@ -80,7 +80,7 @@ def to_lists(samples):
     return x, y
 
 
-def run2(label_list, score_list):
+def run(label_list, score_list):
     samples = get_zipped_samples(label_list, score_list, SAMPLE_SIZE, SAMPLE_SIZE)
     ranked_samples = ranked(samples)
     positive_sum, negative_sum = sum_ranks(ranked_samples)

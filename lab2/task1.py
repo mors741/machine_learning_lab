@@ -1,4 +1,5 @@
 import math
+from mpl_toolkits.mplot3d import Axes3D
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -118,7 +119,7 @@ def draw_plots(X, Y, Z, title):
     contour_plot(X, Y, Z, title)
 
 
-def run1(x1_list, x2_list):
+def run(x1_list, x2_list):
     X, Y = get_sample_dots(x1_list, x2_list)
 
     Z_small = calc_z_matrix(X, Y, x1_list, x2_list, box_kernel, 0.15, 0.15)

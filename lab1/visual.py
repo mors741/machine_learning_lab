@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib.ticker import AutoMinorLocator
 
 
-def visualize1(data):
+def visualize(data):
     xrp = []
     yrp = []
     xrn = []
