@@ -1,6 +1,6 @@
 import csv
 
-from lab2 import task1, task2, task3_bias, task3_disp
+from lab2 import task1, task2, task3_bias, task3_var, task4_var
 from lab2.visual import visualize
 
 
@@ -24,4 +24,5 @@ data, x1, x2 = read_data()
 # task1.run(x1, x2)
 # task2.run(x1, x2)
 # task3_bias.run(x1, x2)
-task3_disp.run(x1, x2)
+# task3_disp.run(x1, x2)
+task4_var.run(x1, x2)
