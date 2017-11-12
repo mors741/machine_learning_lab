@@ -111,7 +111,7 @@ def visualize_different_points(x1_list, x2_list, kernel_function):
     plt.xlabel("lambda (h/h_silverman)")
     plt.ylabel("Variance")
     plt.yscale('log')
-    plt.title("Variance dependency from lambda (different points, Gaussian kernel)")
+    plt.title("Variance dependency from lambda (different points)")
     plt.legend()
 
 def visualize_different_kernels(x1_list, x2_list, fixed_point):
