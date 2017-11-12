@@ -70,11 +70,11 @@ def calc_z_matrix(X, Y, x, y, kernel_function, hx, hy):
     return Z
 
 
-def calc_volume(Z, cell_area):
+def calc_volume(Z):
     volume = 0
     for row in Z:
         for cell in row:
-            volume += cell * cell_area
+            volume += cell * PLOT_STEP**2
     return volume
 
 

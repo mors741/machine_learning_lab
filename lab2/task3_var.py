@@ -58,8 +58,8 @@ def variance(cached_Z, index_matrix):
     return variance_matrix
 
 
-def calc_Z_variance(X, Y, x, y, hx, hy):
-    cached_Z = calc_z_matrix_with_cache(X, Y, x, y, gaussian_kernel, hx, hy, len(x) / 2)
+def calc_Z_variance(X, Y, x, y, hx, hy, kernel_function=gaussian_kernel):
+    cached_Z = calc_z_matrix_with_cache(X, Y, x, y, kernel_function, hx, hy, len(x) / 2)
     return variance(cached_Z, generate_indexes(len(x), ITER_COUNT))
 
 
