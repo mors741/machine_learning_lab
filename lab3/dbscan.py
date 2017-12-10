@@ -60,7 +60,9 @@ def image_plot(X, Y, Z, title, z_label, max_chi=None, max_si=None, cmap=cm.jet, 
 
 def print_max(name, max_val, E, M, K, N, CHI, SI):
     i, j = max_val[1:]
-    print name+": [eps=" + str(E[i][j]) + ", m_s="+str(M[i][j])+ ", K="+ str(K[i][j])+", noise="+str(N[i][j])+", CHI="+str(CHI[i][j])+", SI="+str(SI[i][j])+"]"
+    print name + ": [eps=" + str(E[i][j]) + ", m_s=" + str(M[i][j]) + ", K=" + str(K[i][j]) \
+          + ", noise=" + str(N[i][j]) + ", CHI=" + str(CHI[i][j]) + ", SI=" + str(SI[i][j]) + "]"
+
 
 def run(data, eps_range, ms_range, cmap=cm.jet, show_max=True):
     E, M = np.meshgrid(eps_range, ms_range)
@@ -69,8 +71,8 @@ def run(data, eps_range, ms_range, cmap=cm.jet, show_max=True):
     N = np.empty(shape)
     CHI = np.empty(shape)
     SI = np.empty(shape)
-    max_chi = (0, -1, -1) # (chi, eps, m_s)
-    max_si = (-1, -1, -1) # (si, eps, m_s)
+    max_chi = (0, -1, -1)  # (chi, eps, m_s)
+    max_si = (-1, -1, -1)  # (si, eps, m_s)
     for i in xrange(shape[0]):
         print str(M[i][0]) + "/" + str(M[-1][0])
         for j in xrange(shape[1]):
@@ -93,8 +95,9 @@ def run(data, eps_range, ms_range, cmap=cm.jet, show_max=True):
     print_max("max_si", max_si, E, M, K, N, CHI, SI)
 
     if np.shape(data)[1] == 2:
-        dbscan_visualize(E[max_chi[1]][max_chi[2]], M[max_chi[1]][max_chi[2]], data, "Max CHI ("+"{:.1f}".format(CHI[max_chi[1]][max_chi[2]])+")")
-        dbscan_visualize(E[max_si[1]][max_si[2]], M[max_si[1]][max_si[2]], data, "Max SI ("+"{:.3f}".format(SI[max_si[1]][max_si[2]])+")")
+        dbscan_visualize(E[max_chi[1]][max_chi[2]], M[max_chi[1]][max_chi[2]], data,
+                         "Max CHI (" + "{:.1f}".format(CHI[max_chi[1]][max_chi[2]]) + ")")
+        dbscan_visualize(E[max_si[1]][max_si[2]], M[max_si[1]][max_si[2]], data,
+                         "Max SI (" + "{:.3f}".format(SI[max_si[1]][max_si[2]]) + ")")
     else:
-        print "Couldn't visualize cauterization result. Dimensions != 2"
-
+        print "Couldn't visualize clusterization result. Dimensions != 2"
