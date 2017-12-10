@@ -35,21 +35,23 @@ def dbscan_visualize(eps, m_s, data, title):
     visualize(data, db.labels_, title)
 
 
-def image_plot(X, Y, Z, title, z_label, max_chi=None, max_si=None):
+def image_plot(X, Y, Z, title, z_label, max_chi=None, max_si=None, cmap=cm.jet, show_max=True):
     plt.figure()
-    plt.imshow(Z, extent=[X[0][0], X[0][-1], Y[0][0], Y[-1][0]], cmap=cm.jet, aspect="auto", origin='lower',
+    plt.imshow(Z, extent=[X[0][0], X[0][-1], Y[0][0], Y[-1][0]], cmap=cmap, aspect="auto", origin='lower',
                interpolation="none")
 
     cb = plt.colorbar()
     cb.set_label(z_label)
 
-    if max_chi is not None:
-        i, j = max_chi[1:]
-        plt.scatter(X[i][j], Y[i][j], marker="o", facecolors='none', edgecolors='w', label="Max CHI")
+    if show_max:
+        if max_chi is not None:
+            i, j = max_chi[1:]
+            plt.scatter(X[i][j], Y[i][j], marker="o", s=80, facecolors='none', edgecolors='w', label="Max CHI")
 
-    if max_si is not None:
-        i, j = max_si[1:]
-        plt.scatter(X[i][j], Y[i][j], marker=",", facecolors='none', edgecolors='w', label="Max SI")
+        if max_si is not None:
+            i, j = max_si[1:]
+            plt.scatter(X[i][j], Y[i][j], marker=",", s=80, facecolors='none', edgecolors='w', label="Max SI")
+        plt.legend(loc=4)
 
     plt.xlabel("eps")
     plt.ylabel("m_s")
@@ -60,12 +62,8 @@ def print_max(name, max_val, E, M, K, N, CHI, SI):
     i, j = max_val[1:]
     print name+": [eps=" + str(E[i][j]) + ", m_s="+str(M[i][j])+ ", K="+ str(K[i][j])+", noise="+str(N[i][j])+", CHI="+str(CHI[i][j])+", SI="+str(SI[i][j])+"]"
 
-def run(data):
-    # eps_list = np.arange(0.02, 0.25, 0.05)
-    # ms_list = xrange(6, 250, 20)
-    eps_list = np.arange(0.02, 0.25, 0.003)
-    ms_list = xrange(6, 250, 3)
-    E, M = np.meshgrid(eps_list, ms_list)
+def run(data, eps_range, ms_range, cmap=cm.jet, show_max=True):
+    E, M = np.meshgrid(eps_range, ms_range)
     shape = np.shape(E)
     K = np.empty(shape)
     N = np.empty(shape)
@@ -85,10 +83,10 @@ def run(data):
                 max_chi = (chi, i, j)
             if si > max_si[0]:
                 max_si = (si, i, j)
-    image_plot(E, M, K, "Clusters", "K", max_chi, max_si)
-    image_plot(E, M, N, "Noise", "Noise", max_chi, max_si)
-    image_plot(E, M, CHI, "Calinski-Harabasz index", "CHI", max_chi, max_si)
-    image_plot(E, M, SI, "Silhouette Coefficient", "SI", max_chi, max_si)
+    image_plot(E, M, K, "Clusters", "K", max_chi, max_si, cmap=cmap, show_max=show_max)
+    image_plot(E, M, N, "Noise", "Noise", max_chi, max_si, cmap=cmap, show_max=show_max)
+    image_plot(E, M, CHI, "Calinski-Harabasz index", "CHI", max_chi, max_si, cmap=cmap, show_max=show_max)
+    image_plot(E, M, SI, "Silhouette Coefficient", "SI", max_chi, max_si, cmap=cmap, show_max=show_max)
 
     print "--"
     print_max("max_chi", max_chi, E, M, K, N, CHI, SI)
