@@ -38,5 +38,3 @@ def visualize(data, labels, title="Visualization"):
     plt.ylabel("y")
     plt.title(title)
     plt.legend()
-
-    # plt.show()

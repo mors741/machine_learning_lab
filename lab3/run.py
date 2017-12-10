@@ -1,4 +1,6 @@
 import csv
+import matplotlib.pyplot as plt
+import numpy as np
 
 from lab3 import dbscan
 from lab3.visual import visualize
@@ -19,3 +21,5 @@ def read_data():
 data, labels = read_data()
 # visualize(data, labels)
 dbscan.run(data)
+
+plt.show()
