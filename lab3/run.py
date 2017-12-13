@@ -38,7 +38,7 @@ def read_real_data():
 def investigate_test_data():
     data, labels, full_data = read_test_data()
     # visualize(data, labels)
-    dbscan.run(data, np.arange(0.02, 0.25, 0.05), xrange(6, 250, 20), cmap=cm.jet, show_max=True)
+    # dbscan.run(data, np.arange(0.02, 0.25, 0.05), xrange(6, 250, 20), cmap=cm.jet, show_max=True)
     # dbscan.run(data, np.arange(0.02, 0.25, 0.003), xrange(6, 250, 3), cmap=cm.jet, show_max=True)
 
     heat_map.run(np.array(full_data))

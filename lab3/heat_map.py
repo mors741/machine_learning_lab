@@ -9,10 +9,11 @@ from sklearn.metrics.pairwise import manhattan_distances
 def plot_heatmap(data, title='Heatmap'):
     fig, ax = plt.subplots()
     plt.imshow(data, interpolation='nearest', cmap=cm.viridis)
-    plt.colorbar()
+    cb = plt.colorbar()
+    cb.set_label("Closeness")
     plt.title(title)
-    plt.ylabel('samples')
-    plt.xlabel('samples')
+    plt.ylabel('Samples')
+    plt.xlabel('Samples')
     ax.yaxis.set_minor_locator(AutoMinorLocator(2))
     ax.xaxis.set_minor_locator(AutoMinorLocator(2))
     plt.show()
@@ -25,7 +26,7 @@ def run(data, distance='euclidean'):
 
     if distance == 'euclidean':
         dist = euclidean_distances(data, data)
-        plot_heatmap(dist)
     if distance == 'manhattan':
         dist = manhattan_distances(data, data)
-        plot_heatmap(dist)
+    closeness = np.subtract(1, np.divide(dist, np.max(dist)))
+    plot_heatmap(closeness)
