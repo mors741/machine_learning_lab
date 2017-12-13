@@ -46,10 +46,11 @@ def image_plot(X, Y, Z, title, z_label, max_chi=None, max_si=None, cmap=cm.jet, 
         if max_si is not None:
             i, j = max_si[1:]
             plt.scatter(X[i][j], Y[i][j], marker=",", s=80, facecolors='none', edgecolors='w', label="Max SI")
-        plt.legend(loc=4)
+        plt.legend(loc=2)
 
     plt.xlabel("eps")
     plt.ylabel("m_s")
+    plt.ylim(ymin=np.min(Y))
     plt.title(title)
 
 
