@@ -30,11 +30,6 @@ def dbscan_params(eps, m_s, data):
     return k, noise, chi, si
 
 
-def dbscan_visualize(eps, m_s, data, title):
-    db = DBSCAN(eps=eps, min_samples=m_s).fit(data)
-    visualize(data, db.labels_, title)
-
-
 def image_plot(X, Y, Z, title, z_label, max_chi=None, max_si=None, cmap=cm.jet, show_max=True):
     plt.figure()
     plt.imshow(Z, extent=[X[0][0], X[0][-1], Y[0][0], Y[-1][0]], cmap=cmap, aspect="auto", origin='lower',
@@ -94,10 +89,13 @@ def run(data, eps_range, ms_range, cmap=cm.jet, show_max=True):
     print_max("max_chi", max_chi, E, M, K, N, CHI, SI)
     print_max("max_si", max_si, E, M, K, N, CHI, SI)
 
+    best_chi_labels = DBSCAN(eps=E[max_chi[1]][max_chi[2]], min_samples=M[max_chi[1]][max_chi[2]]).fit(data).labels_
+    best_si_labels = DBSCAN(eps=E[max_si[1]][max_si[2]], min_samples=M[max_si[1]][max_si[2]]).fit(data).labels_
+
     if np.shape(data)[1] == 2:
-        dbscan_visualize(E[max_chi[1]][max_chi[2]], M[max_chi[1]][max_chi[2]], data,
-                         "Max CHI (" + "{:.1f}".format(CHI[max_chi[1]][max_chi[2]]) + ")")
-        dbscan_visualize(E[max_si[1]][max_si[2]], M[max_si[1]][max_si[2]], data,
-                         "Max SI (" + "{:.3f}".format(SI[max_si[1]][max_si[2]]) + ")")
+        visualize(data, best_chi_labels, "Max CHI (" + "{:.1f}".format(CHI[max_chi[1]][max_chi[2]]) + ")")
+        visualize(data, best_si_labels, "Max SI (" + "{:.3f}".format(SI[max_si[1]][max_si[2]]) + ")")
     else:
         print "Couldn't visualize clusterization result. Dimensions != 2"
+
+    return best_chi_labels, best_si_labels
