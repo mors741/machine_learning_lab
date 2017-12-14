@@ -6,6 +6,9 @@ from sklearn.metrics import calinski_harabaz_score, silhouette_score
 
 from lab3.visual import visualize
 
+def visualize_dbscan(eps, m_s, data, title):
+    db = DBSCAN(eps=eps, min_samples=m_s).fit(data)
+    visualize(data, db.labels_, title)
 
 def count_clusters_and_noise(data, labels):
     clusters = set()

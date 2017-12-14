@@ -39,8 +39,10 @@ def investigate_test_data():
     data, labels, full_data = read_test_data()
     # visualize(data, labels)
     # dbscan.run(data, np.arange(0.02, 0.25, 0.01), xrange(6, 250, 8), cmap=cm.jet, show_max=True, noise_limit=0.03)
-    dbscan.run(data, np.arange(0.03, 0.08, 0.01), xrange(2, 10, 1), cmap=cm.jet, show_max=True, noise_limit=0.03)
+    # dbscan.run(data, np.arange(0.03, 0.08, 0.01), xrange(2, 10, 1), cmap=cm.jet, show_max=True, noise_limit=0.03)
     # dbscan.run(data, np.arange(0.02, 0.25, 0.003), xrange(6, 250, 3), cmap=cm.jet, show_max=True, noise_limit=0.03)
+
+    dbscan.visualize_dbscan(0.05, 7, data, "DBSCAN [eps=0.05, m_s=7]")
 
     # heat_map.run(np.array(full_data))
 
