@@ -16,6 +16,14 @@ def plot_heatmap(data, title):
     plt.xlabel('Samples')
 
 
+def label_changes(sorted_labels):
+    res = []
+    for i in xrange(len(sorted_labels)-1):
+        if sorted_labels[i] != sorted_labels[i+1]:
+            print res.append(i)
+    return res
+
+
 def run(data, labels, distance='euclidean', title='Heatmap'):
     data = np.array(data)
     labels = np.array(labels)
