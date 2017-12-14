@@ -38,22 +38,23 @@ def read_real_data():
 def investigate_test_data():
     data, labels, full_data = read_test_data()
     # visualize(data, labels)
-    # dbscan.run(data, np.arange(0.02, 0.25, 0.05), xrange(6, 250, 20), cmap=cm.jet, show_max=True)
-    # dbscan.run(data, np.arange(0.02, 0.25, 0.003), xrange(6, 250, 3), cmap=cm.jet, show_max=True)
+    # dbscan.run(data, np.arange(0.02, 0.25, 0.01), xrange(6, 250, 8), cmap=cm.jet, show_max=True, noise_limit=0.03)
+    dbscan.run(data, np.arange(0.03, 0.08, 0.01), xrange(2, 10, 1), cmap=cm.jet, show_max=True, noise_limit=0.03)
+    # dbscan.run(data, np.arange(0.02, 0.25, 0.003), xrange(6, 250, 3), cmap=cm.jet, show_max=True, noise_limit=0.03)
 
-    heat_map.run(np.array(full_data))
+    # heat_map.run(np.array(full_data))
 
     plt.show()
 
 
 def investigate_real_data():
     data, labels, full_data = read_real_data()
-    dbscan.run(data, np.arange(0.02, 0.4, 0.01), xrange(2, 20, 1), cmap=cm.jet, show_max=True)
+    dbscan.run(data, np.arange(0.02, 0.4, 0.01), xrange(2, 20, 1), cmap=cm.jet, show_max=True, noise_limit=0.01)
 
     heat_map.run(np.array(full_data))
 
     plt.show()
 
 
-# investigate_test_data()
-investigate_real_data()
+investigate_test_data()
+# investigate_real_data()

@@ -23,6 +23,7 @@ def run(data, distance='euclidean'):
     cluster_index = data.shape[1] - 1
     ind = np.argsort(data[:, cluster_index])
     data = data[ind]
+    data = np.delete(data, cluster_index, 1)
 
     if distance == 'euclidean':
         dist = euclidean_distances(data, data)

@@ -7,23 +7,27 @@ from sklearn.metrics import calinski_harabaz_score, silhouette_score
 from lab3.visual import visualize
 
 
-def count_clusters_and_noise(labels):
+def count_clusters_and_noise(data, labels):
     clusters = set()
     noise = 0
-    for label in labels:
-        if label == -1:
+    clear_data = []
+    clear_labels = []
+    for i in xrange(len(labels)):
+        if labels[i] == -1:
             noise += 1
         else:
-            clusters.add(label)
-    return len(clusters), noise
+            clusters.add(labels[i])
+            clear_data.append(data[i])
+            clear_labels.append(labels[i])
+    return len(clusters), noise, clear_data, clear_labels
 
 
 def dbscan_params(eps, m_s, data):
     db = DBSCAN(eps=eps, min_samples=m_s).fit(data)
-    k, noise = count_clusters_and_noise(db.labels_)
+    k, noise, clear_data, clear_labels = count_clusters_and_noise(data, db.labels_)
     if k > 1:
-        chi = calinski_harabaz_score(data, db.labels_)
-        si = silhouette_score(data, db.labels_)
+        chi = calinski_harabaz_score(clear_data, clear_labels)
+        si = silhouette_score(clear_data, clear_labels)
     else:
         chi = 1
         si = -1
@@ -60,7 +64,8 @@ def print_max(name, max_val, E, M, K, N, CHI, SI):
           + ", noise=" + str(N[i][j]) + ", CHI=" + str(CHI[i][j]) + ", SI=" + str(SI[i][j]) + "]"
 
 
-def run(data, eps_range, ms_range, cmap=cm.jet, show_max=True):
+def run(data, eps_range, ms_range, cmap=cm.jet, show_max=True, noise_limit=1):
+    sample_size = len(data)
     E, M = np.meshgrid(eps_range, ms_range)
     shape = np.shape(E)
     K = np.empty(shape)
@@ -77,10 +82,11 @@ def run(data, eps_range, ms_range, cmap=cm.jet, show_max=True):
             N[i][j] = noise
             CHI[i][j] = chi
             SI[i][j] = si
-            if chi > max_chi[0]:
-                max_chi = (chi, i, j)
-            if si > max_si[0]:
-                max_si = (si, i, j)
+            if sample_size * noise_limit >= noise:
+                if chi > max_chi[0]:
+                    max_chi = (chi, i, j)
+                if si > max_si[0]:
+                    max_si = (si, i, j)
     image_plot(E, M, K, "Clusters", "K", max_chi, max_si, cmap=cmap, show_max=show_max)
     image_plot(E, M, N, "Noise", "Noise", max_chi, max_si, cmap=cmap, show_max=show_max)
     image_plot(E, M, CHI, "Calinski-Harabasz index", "CHI", max_chi, max_si, cmap=cmap, show_max=show_max)
