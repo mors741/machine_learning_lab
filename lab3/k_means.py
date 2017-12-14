@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import AutoMinorLocator, MaxNLocator
 from sklearn.cluster import KMeans
-from sklearn.metrics import calinski_harabaz_score, silhouette_score
+from sklearn.metrics import calinski_harabaz_score, silhouette_score, adjusted_rand_score
 
 from lab3 import heat_map
 from lab3.visual import visualize
@@ -30,21 +30,25 @@ def draw_plot(x, y, x_label, y_label):
     plt.ylabel(y_label)
 
 
-def run(data, max_clusters, vis_range):
+def run(data, true_labels, max_clusters, vis_range):
     interias = []
     calinski_indexes = []
     silhouette_indexes = []
+    adjusted_rand_indexes = []
 
     for n_cluster in range(2, max_clusters + 1):
         labels, centers, interia = k_means(data, n_cluster)
         interias.append(interia)
         calinski_indexes.append(calinski_harabaz_score(data, labels))
         silhouette_indexes.append(silhouette_score(data, labels, metric='euclidean'))
+        adjusted_rand_indexes.append(adjusted_rand_score(true_labels, labels))
 
-        if np.shape(data)[1] == 2 and n_cluster in vis_range:
-            visualize(data, labels)
+        if n_cluster in vis_range:
+            if np.shape(data)[1] == 2:
+                visualize(data, labels)
             heat_map.run(data, labels, title="K="+str(n_cluster))
 
     draw_plot(range(2, max_clusters + 1), interias, "K", "S")
     draw_plot(range(2, max_clusters + 1), calinski_indexes, "K", "CHI")
     draw_plot(range(2, max_clusters + 1), silhouette_indexes, "K", "SI")
+    draw_plot(range(2, max_clusters + 1), adjusted_rand_indexes, "K", "ARI")
