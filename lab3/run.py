@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import cm
 
-from lab3 import dbscan, heat_map
+from lab3 import dbscan, heat_map, k_means
 from lab3.visual import visualize
 
 
@@ -37,6 +37,8 @@ def investigate_test_data():
     # visualize(data, labels)
     # heat_map.run(data, labels)
 
+    k_means.run(data, 25, [2, 10, 18])
+
     # dbscan.run(data, np.arange(0.02, 0.05, 0.001), xrange(2, 30, 1), labels, cmap=cm.jet, show_max=True, noise_limit=0.03)
 
 
@@ -50,7 +52,8 @@ def investigate_test_data():
     # dbscan.visualize_dbscan(0.05, 7, data, "DBSCAN [eps=0.05, m_s=7]")
     # dbscan.visualize_dbscan(0.06, 26, data, "DBSCAN [eps=0.06, m_s=26]")
     # dbscan.visualize_dbscan(0.191, 156, data, "DBSCAN [eps=0.191, m_s=156]")
-    dbscan.visualize_dbscan(0.06, 27, data, "DBSCAN [eps=0.06, m_s=27]")
+    # dbscan.visualize_dbscan(0.06, 27, data, "DBSCAN [eps=0.06, m_s=27]")
+
 
 
     plt.show()
@@ -67,5 +70,5 @@ def investigate_real_data():
     plt.show()
 
 
-# investigate_test_data()
-investigate_real_data()
+investigate_test_data()
+# investigate_real_data()

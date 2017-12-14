@@ -113,8 +113,6 @@ def run(data, eps_range, ms_range, true_labels, cmap=cm.jet, show_max=True, nois
     if np.shape(data)[1] == 2:
         visualize(data, best_chi_labels, "Max CHI (" + "{:.1f}".format(CHI[max_chi[1]][max_chi[2]]) + ")")
         visualize(data, best_si_labels, "Max SI (" + "{:.3f}".format(SI[max_si[1]][max_si[2]]) + ")")
-    else:
-        print "Couldn't visualize clusterization result. Dimensions != 2"
 
     heat_map.run(data, best_chi_labels, title="Heatmap best CHI")
     heat_map.run(data, best_si_labels, title="Heatmap best SI")
